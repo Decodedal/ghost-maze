@@ -1,0 +1,1 @@
+window.alert('we have java script')
