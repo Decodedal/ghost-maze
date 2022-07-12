@@ -9,27 +9,33 @@ function setPositon(item,num1,num2){
 }
 
 setPositon(ghost,100,100)
+//assignes ghost current left and bottom position to variables
+let x = parseInt(ghost.style.left)
+let y = parseInt(ghost.style.bottom)
 
-let x = ghost.style.left
-let y = ghost.style.right
 
 document.addEventListener('keydown',function(e){
     if(e.key === 'ArrowLeft'){
-        direction = 'left'
-        console.log('left')
-    }
-    if(e.key ==='ArrowUp'){
-        directon = 'up'
-        console.log('up')
-    }
-    if(e.key ==="ArrowDown"){
-        direction = 'down'
-        console.log('down')
+        x = x - 3
+        ghost.style.left = x + 'px' 
+        console.log(x)
     }
     if(e.key ==="ArrowRight"){
-        direction = 'right'
-        console.log("right")
+        x = x + 3
+        ghost.style.left = x + 'px' 
+        console.log(x)
     }
+    if(e.key ==='ArrowUp'){
+        y = y + 3
+        ghost.style.bottom = y + 'px'
+        console.log(y)
+    }
+    if(e.key ==="ArrowDown"){
+        y = y - 3
+        ghost.style.bottom = y + 'px'
+        console.log(y)
+    }
+  
 })
 
 // ghost.addEventListener('click',()=> console.log('hi im ghost'))
