@@ -10,3 +10,10 @@ body{
    left : 100px;
    bottom: 500;; 
 }
+
+.wall{
+    background-color: red;
+    width: 500px;
+    height :10px;
+    position: fixed;
+}

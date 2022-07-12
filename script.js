@@ -13,7 +13,7 @@ setPositon(ghost,100,100)
 let x = parseInt(ghost.style.left)
 let y = parseInt(ghost.style.bottom)
 
-
+//moves the main ghost character when user presses arrow keys
 document.addEventListener('keydown',function(e){
     if(e.key === 'ArrowLeft'){
         x = x - 3
@@ -39,3 +39,72 @@ document.addEventListener('keydown',function(e){
 })
 
 // ghost.addEventListener('click',()=> console.log('hi im ghost'))
+
+//function to create and place divs or maze walls
+// function makeWall(height,width,left,bottom){
+//     let wall = document.createElement('div')
+//     // wall.style.border = '1px dotted black'
+//     wall.style.position = 'fixed'
+//     wall.style.backgroundcolor = 'green'
+//     wall.style.height = height + 'px'
+//     wall.style.width =  width + 'px'
+//     wall.style.left = left + 'px'
+//     wall.style.botoom = bottom + 'px'
+//     document.body.appendChild(wall)   
+// }
+
+// makeWall(500,10,700,200)
+
+function makeWall(height,width){
+    
+// var div = document.createElement("div");
+// div.style.width = "100px";
+// div.style.height = "100px";
+// div.style.background = "red"; 
+// div.style.color = "white";
+// div.innerHTML = "Hello";
+// document.body.append(div)
+    let wall = document.createElement('div')
+    wall.style.border = '1px dotted white'
+    wall.style.position = 'fixed'
+    wall.style.backgroundColor = 'green'
+    wall.style.height = `${height}px`
+    wall.style.width =  `${width}px`
+    // wall.style.left = '100px'
+    // wall.style.bottom = '50px'
+    document.body.appendChild(wall) 
+    console.log(height)  
+}
+
+makeWall(100,200)
+
+function addText(){
+    let p = document.createElement('p')
+    p.textContent = "hi yo"
+    document.body.appendChild(p)
+}
+
+addText()
+
+document.addEventListener('mousedown', (event)=>{
+let a = event.clientX;
+let b = event.clientY;
+console.log(a,b)
+return a,b 
+})
+
+document.addEventListener("mouseup",(event)=>{
+    let c = event.clientX;
+    let d = event.clientY;
+    console.log(c,d)
+    return(c,d)
+})
+
+// document.addEventListener('keyup', event => {
+//     if (event.code === 'Space') {
+//       console.log(a)
+//     }
+// })
+async function makediv(){
+    await console.log(a)
+}
