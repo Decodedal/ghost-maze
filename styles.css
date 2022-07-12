@@ -2,3 +2,11 @@ body{
     background-color: black;
     color: whitesmoke;
 }
+
+#ghost{
+   height: 5rem;
+   width: 5rem;
+   position: fixed;
+   left : 100px;
+   bottom: 500;; 
+}
