@@ -27,8 +27,12 @@ document.addEventListener('keydown',function(e){
     }
     if(e.key ==='ArrowUp'){
         y = y + 3
+        if(checkMove()){
         ghost.style.bottom = y + 'px'
         console.log(y)
+        }else{
+            y = y - 3
+        }
     }
     if(e.key ==="ArrowDown"){
         y = y - 3
@@ -38,54 +42,8 @@ document.addEventListener('keydown',function(e){
   
 })
 
-// ghost.addEventListener('click',()=> console.log('hi im ghost'))
 
-//function to create and place divs or maze walls
-// function makeWall(height,width,left,bottom){
-//     let wall = document.createElement('div')
-//     // wall.style.border = '1px dotted black'
-//     wall.style.position = 'fixed'
-//     wall.style.backgroundcolor = 'green'
-//     wall.style.height = height + 'px'
-//     wall.style.width =  width + 'px'
-//     wall.style.left = left + 'px'
-//     wall.style.botoom = bottom + 'px'
-//     document.body.appendChild(wall)   
-// }
-
-// makeWall(500,10,700,200)
-
-function makeWall(height,width){
-    
-// var div = document.createElement("div");
-// div.style.width = "100px";
-// div.style.height = "100px";
-// div.style.background = "red"; 
-// div.style.color = "white";
-// div.innerHTML = "Hello";
-// document.body.append(div)
-    let wall = document.createElement('div')
-    wall.style.border = '1px dotted white'
-    wall.style.position = 'fixed'
-    wall.style.backgroundColor = 'green'
-    wall.style.height = `${height}px`
-    wall.style.width =  `${width}px`
-    // wall.style.left = '100px'
-    // wall.style.bottom = '50px'
-    document.body.appendChild(wall) 
-    console.log(height)  
-}
-
-makeWall(100,200)
-
-function addText(){
-    let p = document.createElement('p')
-    p.textContent = "hi yo"
-    document.body.appendChild(p)
-}
-
-addText()
-
+//find cordinates of mouse click thought would be helpful with layout
 document.addEventListener('mousedown', (event)=>{
 let a = event.clientX;
 let b = event.clientY;
@@ -100,11 +58,44 @@ document.addEventListener("mouseup",(event)=>{
     return(c,d)
 })
 
-// document.addEventListener('keyup', event => {
-//     if (event.code === 'Space') {
-//       console.log(a)
-//     }
-// })
-async function makediv(){
-    await console.log(a)
+
+//set position of walls 
+let walls =[
+    {x_postion:300, y_position:300, width:300, height:10 },
+    {x_postion:300, y_position:500, width:300, height:10 }
+]
+//loop through and create my walls
+walls.forEach( item =>{
+  let wall = document.createElement('div')
+    wall.style.border = '1px dotted white'
+    wall.style.position = 'fixed'
+    wall.style.backgroundColor = 'green'
+    wall.style.height = `${item.height}px`
+    wall.style.width =  `${item.width}px`
+    wall.style.left =  `${item.x_postion}px`
+    wall.style.bottom = `${item.y_position}px`
+    document.body.appendChild(wall)
+})
+//logic for collision 
+function collisionDetect(a,b){
+    return(
+        (a.y_position + a.width) <= (b.y_position)||
+        (a.y_position)>= (b.y_position + b.height)||
+        ((a.x_postion + a.width)<= b.x_postion)||
+        (a.x_postion >= (b.x_postion + b.width))
+    );
+}
+//function to check if ghost is running into any walls
+function checkMove(){
+    let result 
+    for (let i = 0; i<walls.length; i++){
+        if (!collisionDetect(ghost, walls[i])){
+             result = false;
+             break;
+        }else{
+             result = true;
+        }
+    }
+    console.log(result)
+    return result
 }
