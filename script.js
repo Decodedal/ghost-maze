@@ -1,5 +1,5 @@
 // window.alert('we have java script')
-let ghost = document.querySelector('#ghost')
+let ghostRef = document.querySelector('#ghost')
 
 function setPositon(item,num1,num2){
     let one =  item.style.left = num1 + 'px'
@@ -7,85 +7,60 @@ function setPositon(item,num1,num2){
     console.log(one,two)
     return one, two
 }
+let ghost = {
+    x_postion : 696,
+    y_position :318,
+    width: 50,
+    height : 50, 
+}
 
-setPositon(ghost,100,100)
-//assignes ghost current left and bottom position to variables
-let x = parseInt(ghost.style.left)
-let y = parseInt(ghost.style.bottom)
+ghostRef.style.left = ghost.x_postion + 'px'
+ghostRef.style.top = ghost.y_position + 'px'
+ghostRef.style.width = ghost.width + 'px'
+ghostRef.style.height = ghost.height + 'px'
 
-//moves the main ghost character when user presses arrow keys
 document.addEventListener('keydown',function(e){
     if(e.key === 'ArrowLeft'){
-        x = x - 3
-        ghost.style.left = x + 'px' 
-        console.log(x)
+        ghost.x_postion -= 6
+        if(checkMove()){
+        ghostRef.style.left = ghost.x_postion + 'px' 
+        console.log(ghost.x_postion)
+        }else{
+            ghost.x_postion += 6
+        }
     }
     if(e.key ==="ArrowRight"){
-        x = x + 3
-        ghost.style.left = x + 'px' 
-        console.log(x)
+        ghost.x_postion += 6
+        if(checkMove()){
+        ghostRef.style.left = ghost.x_postion + 'px' 
+        console.log(ghost.x_postion)
+        }else{
+            ghost.x_postion -= 6
+        }
     }
     if(e.key ==='ArrowUp'){
-        y = y + 3
-        ghost.style.bottom = y + 'px'
-        console.log(y)
+        ghost.y_position -=6
+        if(checkMove()){
+        ghostRef.style.top = ghost.y_position + 'px'
+        console.log(ghost.y_position)
+        }else{
+            ghost.y_position += 6
+        }
     }
     if(e.key ==="ArrowDown"){
-        y = y - 3
-        ghost.style.bottom = y + 'px'
-        console.log(y)
+        ghost.y_position += 6
+        if(checkMove()){
+        ghostRef.style.top = ghost.y_position + 'px'
+        console.log(ghost.y_position)
+        }else{
+            ghost.y_position -= 6
+        }
     }
   
 })
 
-// ghost.addEventListener('click',()=> console.log('hi im ghost'))
 
-//function to create and place divs or maze walls
-// function makeWall(height,width,left,bottom){
-//     let wall = document.createElement('div')
-//     // wall.style.border = '1px dotted black'
-//     wall.style.position = 'fixed'
-//     wall.style.backgroundcolor = 'green'
-//     wall.style.height = height + 'px'
-//     wall.style.width =  width + 'px'
-//     wall.style.left = left + 'px'
-//     wall.style.botoom = bottom + 'px'
-//     document.body.appendChild(wall)   
-// }
-
-// makeWall(500,10,700,200)
-
-function makeWall(height,width){
-    
-// var div = document.createElement("div");
-// div.style.width = "100px";
-// div.style.height = "100px";
-// div.style.background = "red"; 
-// div.style.color = "white";
-// div.innerHTML = "Hello";
-// document.body.append(div)
-    let wall = document.createElement('div')
-    wall.style.border = '1px dotted white'
-    wall.style.position = 'fixed'
-    wall.style.backgroundColor = 'green'
-    wall.style.height = `${height}px`
-    wall.style.width =  `${width}px`
-    // wall.style.left = '100px'
-    // wall.style.bottom = '50px'
-    document.body.appendChild(wall) 
-    console.log(height)  
-}
-
-makeWall(100,200)
-
-function addText(){
-    let p = document.createElement('p')
-    p.textContent = "hi yo"
-    document.body.appendChild(p)
-}
-
-addText()
-
+//find cordinates of mouse click thought would be helpful with layout
 document.addEventListener('mousedown', (event)=>{
 let a = event.clientX;
 let b = event.clientY;
@@ -93,18 +68,75 @@ console.log(a,b)
 return a,b 
 })
 
-document.addEventListener("mouseup",(event)=>{
-    let c = event.clientX;
-    let d = event.clientY;
-    console.log(c,d)
-    return(c,d)
-})
-
-// document.addEventListener('keyup', event => {
-//     if (event.code === 'Space') {
-//       console.log(a)
-//     }
+// document.addEventListener("mouseup",(event)=>{
+//     let c = event.clientX;
+//     let d = event.clientY;
+//     console.log(c,d)
+//     return(c,d)
 // })
-async function makediv(){
-    await console.log(a)
+
+
+//set position of walls 
+let walls =[
+     //box surrounding player in center    
+     {x_postion:620, y_position:290, width:10, height:100},
+     {x_postion:800, y_position:290, width:10, height:100},
+     {x_postion:620, y_position:290, width:60, height:10},
+     {x_postion:750, y_position:290, width:60, height:10},
+     {x_postion:620, y_position:390, width:60, height:10},
+     {x_postion:750, y_position:390, width:60, height:10},
+     //border of game 
+     {x_postion:170, y_position:620, width:1100, height:10},
+     {x_postion:170, y_position:90, width:1100, height:10},
+     {x_postion:170, y_position:90, width:10, height:540},
+     {x_postion:1270,y_position:90, width:10, height:540},
+
+]
+//loop through and create my walls
+walls.forEach( item =>{
+  let wall = document.createElement('div')
+    wall.style.border = '1px dotted white'
+    wall.style.position = 'fixed'
+    wall.style.backgroundColor = 'green'
+    wall.style.height = `${item.height}px`
+    wall.style.width =  `${item.width}px`
+    wall.style.left =  `${item.x_postion}px`
+    wall.style.top = `${item.y_position}px`
+    document.body.appendChild(wall)
+})
+//logic for collision 
+function collisionDetect(a,b){
+    return(
+        // (a.y_position + a.width) <= (b.y_position)||
+        // (a.y_position)>= (b.y_position + b.height)||
+        // ((a.x_postion + a.width)<= b.x_postion)||
+        // (a.x_postion >= (b.x_postion + b.width))
+     
+        a.x_postion > b.x_postion + b.width ||
+        a.x_postion + a.width < b.x_postion ||
+        a.y_position > b.y_position + b.height ||
+        a.y_position + a.height < b.y_position
+       
+        // a.x_postion < b.x_postion + b.width &&
+        // a.x_postion - a.width > b.x_postion &&
+        // a.y_position < b.y_position + b.height&&
+        // a.y_position + a.height > b.y_position
+
+        // a.x_postion + a.width >= b.x_postion &&
+        // a.x_postion <= b.x_postion + b.width
+        );
+}
+//function to check if ghost is running into any walls
+function checkMove(){
+    let result 
+    for (let i = 0; i<walls.length; i++){
+        if (!collisionDetect(ghost, walls[i])){
+             result = false;
+             break;
+        }else{
+             result = true;
+        }
+    }
+    console.log(result)
+    return result
 }

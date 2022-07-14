@@ -1,14 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 body{
     background-color: black;
     color: whitesmoke;
+    display: flex;
+    align-content: center;
 }
 
 #ghost{
-   height: 5rem;
-   width: 5rem;
-   position: fixed;
-   left : 100px;
-   bottom: 500;; 
+   /* height: 5rem;
+   width: 5rem; */
+   position: absolute;
+   /* left : 
+   bottom:  */
+   transition: all 5ms; 
 }
 
 .wall{
@@ -16,4 +23,12 @@ body{
     width: 500px;
     height :10px;
     position: fixed;
+}
+
+#sprite{
+    position: relative;
+}
+
+.game-board{
+    background-color: rgb(179, 48, 48);
 }
