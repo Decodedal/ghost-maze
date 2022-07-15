@@ -97,8 +97,14 @@ let walls =[
      {x_postion:900, y_position:400, width:300, height:10},
      {x_postion:1000, y_position:200, width:10, height:100},
      {x_postion:1000, y_position:200, width:160, height:10},
-     {x_postion:350, y_position:500, width:930, height:10},
+     {x_postion:330, y_position:500, width:930, height:10},
      {x_postion:750, y_position:400, width:10, height:100},
+     //top left
+     {x_postion:430, y_position:200, width:10, height:200},
+     {x_postion:530, y_position:200, width:10, height:300},
+     {x_postion:330, y_position:200, width:10, height:300},
+     {x_postion:330, y_position:200, width:100, height:10},
+
      
     
 ]
