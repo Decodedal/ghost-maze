@@ -24,6 +24,7 @@ document.addEventListener('keydown',function(e){
         ghost.x_postion -= 6
         if(checkMove()){
         ghostRef.style.left = ghost.x_postion + 'px' 
+        ghostRef.style.transform = 'scaleX(1)'
         console.log(ghost.x_postion)
         }else{
             ghost.x_postion += 6
@@ -33,6 +34,7 @@ document.addEventListener('keydown',function(e){
         ghost.x_postion += 6
         if(checkMove()){
         ghostRef.style.left = ghost.x_postion + 'px' 
+        ghostRef.style.transform = 'scaleX(-1)'
         console.log(ghost.x_postion)
         }else{
             ghost.x_postion -= 6
@@ -96,6 +98,7 @@ let walls =[
      {x_postion:900, y_position:100, width:10, height:300},
      {x_postion:900, y_position:400, width:300, height:10},
      {x_postion:1000, y_position:200, width:10, height:100},
+     {x_postion:1000, y_position:300, width:270, height:10},
      {x_postion:1000, y_position:200, width:160, height:10},
      {x_postion:330, y_position:500, width:930, height:10},
      {x_postion:750, y_position:400, width:10, height:100},
@@ -144,3 +147,20 @@ function checkMove(){
     console.log(result)
     return result
 }
+
+//make the enemys to avoid
+
+function createEnemy(left,top){
+    let enemy = document.createElement('img');
+    enemy.src = "assets/imgs/kisspng-mega-man-11-video-games-pixel-art-sprite-mega-man-megaman-x-8-bit-www-imgkid-com-the-image-kid-h-5cd6b5d4a2f441.4503273315575751246675.png" 
+    document.body.appendChild = enemy
+    enemy.style.position = 'fixed'
+    enemy.style.left = left + 'px'
+    enemy.style.top = top + 'px'
+    return enemy
+}
+
+createEnemy(227,145)
+
+
+
