@@ -28,7 +28,3 @@ body{
 #sprite{
     position: relative;
 }
-
-.game-board{
-    background-color: rgb(179, 48, 48);
-}

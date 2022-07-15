@@ -89,8 +89,18 @@ let walls =[
      {x_postion:170, y_position:620, width:1100, height:10},
      {x_postion:170, y_position:90, width:1100, height:10},
      {x_postion:170, y_position:90, width:10, height:540},
-     {x_postion:1270,y_position:90, width:10, height:540},
-
+     {x_postion:1270,y_position:90, width:10, height:440},
+     //pivotal end piece
+     {x_postion:1270,y_position:530, width:10, height:100},
+     //top right 
+     {x_postion:900, y_position:100, width:10, height:300},
+     {x_postion:900, y_position:400, width:300, height:10},
+     {x_postion:1000, y_position:200, width:10, height:100},
+     {x_postion:1000, y_position:200, width:160, height:10},
+     {x_postion:350, y_position:500, width:930, height:10},
+     {x_postion:750, y_position:400, width:10, height:100},
+     
+    
 ]
 //loop through and create my walls
 walls.forEach( item =>{
@@ -107,23 +117,11 @@ walls.forEach( item =>{
 //logic for collision 
 function collisionDetect(a,b){
     return(
-        // (a.y_position + a.width) <= (b.y_position)||
-        // (a.y_position)>= (b.y_position + b.height)||
-        // ((a.x_postion + a.width)<= b.x_postion)||
-        // (a.x_postion >= (b.x_postion + b.width))
-     
-        a.x_postion > b.x_postion + b.width ||
-        a.x_postion + a.width < b.x_postion ||
-        a.y_position > b.y_position + b.height ||
-        a.y_position + a.height < b.y_position
-       
-        // a.x_postion < b.x_postion + b.width &&
-        // a.x_postion - a.width > b.x_postion &&
-        // a.y_position < b.y_position + b.height&&
-        // a.y_position + a.height > b.y_position
-
-        // a.x_postion + a.width >= b.x_postion &&
-        // a.x_postion <= b.x_postion + b.width
+        // additional numbers shrink the ghost hit box so player doesnt get stuck on corner 
+        a.x_postion + 7 > b.x_postion + b.width ||
+        a.x_postion + a.width - 5 < b.x_postion ||
+        a.y_position +6 > b.y_position + b.height ||
+        a.y_position + a.height -5 < b.y_position
         );
 }
 //function to check if ghost is running into any walls
