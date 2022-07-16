@@ -100,7 +100,8 @@ let walls =[
      {x_postion:1000, y_position:200, width:10, height:100},
      {x_postion:1000, y_position:300, width:270, height:10},
      {x_postion:1000, y_position:200, width:160, height:10},
-     {x_postion:330, y_position:500, width:930, height:10},
+     {x_postion:330, y_position:500, width:350, height:10},
+     {x_postion:750, y_position:500, width:350, height:10},
      {x_postion:750, y_position:400, width:10, height:100},
      //top left
      {x_postion:430, y_position:200, width:10, height:200},
@@ -148,19 +149,128 @@ function checkMove(){
     return result
 }
 
-//make the enemys to avoid
+//set enemy paramiters
 
-function createEnemy(left,top){
+
+
+let enemys = [
+    {width:50 , height:50, x_postion:1200, y_position:130},
+    {width:50 , height:50, x_postion:800, y_position:430},
+    {width:50 , height:50, x_postion:565, y_position:220},
+]
+
+
+
+
+
+
+//creates ememys on the map 
+// enemys.forEach(item => {
+//     let enemy = document.createElement('img');
+//     enemy.src = "assets/imgs/kisspng-mega-man-11-video-games-pixel-art-sprite-mega-man-megaman-x-8-bit-www-imgkid-com-the-image-kid-h-5cd6b5d4a2f441.4503273315575751246675.png" 
+//     enemy.style.position = 'fixed'
+//     enemy.style.height = `${item.height}px`
+//     enemy.style.width =  `${item.width}px`
+//     enemy.style.left =  `${item.x_postion}px`
+//     enemy.style.top = `${item.y_position}px`
+//     enemy.className = 'enemys'
+//     document.body.appendChild(enemy)
+//     return enemy
+// })
+
+
+
+// let enemy = document.querySelectorAll('.enemys')
+ 
+// for (let i = 0; i<enemy.length; i++){
+//     let x =  enemys[i].x_postion +15
+//     enemy[i].style.left = x
+// }
+//create enemy in the dom
+function defineEnemy(){
     let enemy = document.createElement('img');
     enemy.src = "assets/imgs/kisspng-mega-man-11-video-games-pixel-art-sprite-mega-man-megaman-x-8-bit-www-imgkid-com-the-image-kid-h-5cd6b5d4a2f441.4503273315575751246675.png" 
-    document.body.appendChild = enemy
     enemy.style.position = 'fixed'
-    enemy.style.left = left + 'px'
-    enemy.style.top = top + 'px'
+    enemy.style.height = '50px'
+    enemy.style.width =  '50px'
+    document.body.appendChild(enemy)
     return enemy
 }
 
-createEnemy(227,145)
 
+function newEnemy(x_postion,y_position){
+    let sprite = defineEnemy()
+    let direction = null;
 
+    function moveEnemy(){
+        if (direction === 'left'){
+            x_postion -= 1
+        }
+        if( direction === 'right'){
+            x_postion += 1
+        }
+        if(direction ==='up'){
+            y_position -= 1
+        }
+        if(direction === 'down'){
+            y_position += 1
+        }
+        sprite.style.left = x_postion +'px'
+        sprite.style.top = y_position +'px'
+    }
+    setInterval(moveEnemy,10)
+   
+    function walkUp(time){
+        direction = 'up'
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                direction = null
+                resolve()
+            },time)
+        })
+    }
+    function walkDown(time){
+        direction = "down"
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                direction = null
+                resolve()
+            },time)
+        })
+    }
+    function walkLeft(time){
+        direction = 'left'
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                direction = null
+                resolve()
+            },time)
+        })
+    }
+    function walkRight(time){
+        direction = 'right'
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                direction = null
+                resolve()
+            },time)
+        })
+    }
+    function stop(){
+        direction = null
+    }
+    return {
+        sprite :sprite,
+        walkUp :walkUp,
+        walkDown: walkDown,
+        walkLeft :walkLeft,
+        walkRight :walkRight,
+        stop:stop
+    }
+}
+
+let enemy1 = newEnemy(1208,150)
+
+enemy1.walkLeft(2500)
+      .then(()=> enemy1.walkDown(1000))
 
