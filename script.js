@@ -25,7 +25,7 @@ document.addEventListener('keydown',function(e){
         if(checkMove()){
         ghostRef.style.left = ghost.x_postion + 'px' 
         ghostRef.style.transform = 'scaleX(1)'
-        console.log(ghost.x_postion)
+        // console.log(ghost.x_postion)
         }else{
             ghost.x_postion += 6
         }
@@ -35,7 +35,7 @@ document.addEventListener('keydown',function(e){
         if(checkMove()){
         ghostRef.style.left = ghost.x_postion + 'px' 
         ghostRef.style.transform = 'scaleX(-1)'
-        console.log(ghost.x_postion)
+        // console.log(ghost.x_postion)
         }else{
             ghost.x_postion -= 6
         }
@@ -44,7 +44,7 @@ document.addEventListener('keydown',function(e){
         ghost.y_position -=6
         if(checkMove()){
         ghostRef.style.top = ghost.y_position + 'px'
-        console.log(ghost.y_position)
+        // console.log(ghost.y_position)
         }else{
             ghost.y_position += 6
         }
@@ -53,7 +53,7 @@ document.addEventListener('keydown',function(e){
         ghost.y_position += 6
         if(checkMove()){
         ghostRef.style.top = ghost.y_position + 'px'
-        console.log(ghost.y_position)
+        // console.log(ghost.y_position)
         }else{
             ghost.y_position -= 6
         }
@@ -145,7 +145,7 @@ function checkMove(){
              result = true;
         }
     }
-    console.log(result)
+    // console.log(result)
     return result
 }
 
@@ -160,32 +160,6 @@ let enemys = [
 ]
 
 
-
-
-
-
-//creates ememys on the map 
-// enemys.forEach(item => {
-//     let enemy = document.createElement('img');
-//     enemy.src = "assets/imgs/kisspng-mega-man-11-video-games-pixel-art-sprite-mega-man-megaman-x-8-bit-www-imgkid-com-the-image-kid-h-5cd6b5d4a2f441.4503273315575751246675.png" 
-//     enemy.style.position = 'fixed'
-//     enemy.style.height = `${item.height}px`
-//     enemy.style.width =  `${item.width}px`
-//     enemy.style.left =  `${item.x_postion}px`
-//     enemy.style.top = `${item.y_position}px`
-//     enemy.className = 'enemys'
-//     document.body.appendChild(enemy)
-//     return enemy
-// })
-
-
-
-// let enemy = document.querySelectorAll('.enemys')
- 
-// for (let i = 0; i<enemy.length; i++){
-//     let x =  enemys[i].x_postion +15
-//     enemy[i].style.left = x
-// }
 //create enemy in the dom
 function defineEnemy(){
     let enemy = document.createElement('img');
@@ -197,7 +171,7 @@ function defineEnemy(){
     return enemy
 }
 
-
+//logic to set enemy movement path 
 function newEnemy(x_postion,y_position){
     let sprite = defineEnemy()
     let direction = null;
@@ -205,15 +179,27 @@ function newEnemy(x_postion,y_position){
     function moveEnemy(){
         if (direction === 'left'){
             x_postion -= 1
+            if(checkEnemyHit()){
+                console.log('we are hit capitan')
+            }
         }
         if( direction === 'right'){
             x_postion += 1
+            if(checkEnemyHit()){
+                console.log('we are hit capitan')
+            }
         }
         if(direction ==='up'){
             y_position -= 1
+            if(checkEnemyHit()){
+                console.log('we are hit capitan')
+            }
         }
         if(direction === 'down'){
             y_position += 1
+            if(checkEnemyHit()){
+                console.log('we are hit capitan')
+            }
         }
         sprite.style.left = x_postion +'px'
         sprite.style.top = y_position +'px'
@@ -268,9 +254,30 @@ function newEnemy(x_postion,y_position){
         stop:stop
     }
 }
+//array of new enemys
+let enemyGroup =[ 
+    newEnemy(1208, 150),
+    newEnemy(560 , 233)
+]
+//defining enemy trajectorys
+// enemyGroup[0].walkLeft(2500)
+//       .then(()=> enemyGroup[0].walkDown(1000))
 
-let enemy1 = newEnemy(1208,150)
+enemyGroup[1].walkRight(2800)
+             .then(()=> enemyGroup[1].walkLeft(2800))
 
-enemy1.walkLeft(2500)
-      .then(()=> enemy1.walkDown(1000))
 
+ // function to check if enemy is colliding with ghost     
+      function checkEnemyHit(){
+        let result 
+        for (let i = 0; i<enemyGroup.length; i++){
+            if (!collisionDetect(ghost, enemyGroup[i])){
+                 result = false;
+                 break;
+            }else{
+                 result = true;
+            }
+        }
+        console.log(result)
+        return result
+    }
