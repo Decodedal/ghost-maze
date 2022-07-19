@@ -33,3 +33,19 @@ body{
   height: 50px;
   position: fixed;
 }
+h1{
+    text-align: center;
+}
+#keys-count{
+  color: red;
+}
+p{
+    text-align: center;
+}
+
+/* .header{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+} */
+

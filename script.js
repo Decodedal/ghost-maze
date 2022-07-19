@@ -1,7 +1,19 @@
 // window.alert('we have java script')
 let ghostRef = document.querySelector('#ghost');
 let start = document.querySelector('#button');
+let keyCountRef = document.querySelector("#keys-count")
 let win = false;
+let keyCount = 0;
+
+function updateKeyCount(){
+    keyCountRef.textContent = keyCount
+    if(keyCount === 3){
+       exitSign.x_postion = 666;
+       exit.style.left = `${exitSign.x_postion}px`;
+    }
+}
+
+updateKeyCount()
 
 function setPositon(item,num1,num2){
     let one =  item.style.left = num1 + 'px'
@@ -31,7 +43,6 @@ document.addEventListener('keydown',function(e){
         }else{
             ghost.x_postion += 6
         }
-        checkKeys()
     }
     if(e.key ==="ArrowRight"){
         ghost.x_postion += 6
@@ -42,7 +53,7 @@ document.addEventListener('keydown',function(e){
         }else{
             ghost.x_postion -= 6
         }
-        checkKeys()
+       
     }
     if(e.key ==='ArrowUp'){
         ghost.y_position -=6
@@ -52,7 +63,7 @@ document.addEventListener('keydown',function(e){
         }else{
             ghost.y_position += 6
         }
-        checkKeys()
+        
     }
     if(e.key ==="ArrowDown"){
         ghost.y_position += 6
@@ -62,9 +73,9 @@ document.addEventListener('keydown',function(e){
         }else{
             ghost.y_position -= 6
         }
-        checkKeys()
     }
-  
+  checkKeys()
+  checkExit()
 })
 
 
@@ -86,6 +97,8 @@ return a,b
 
 //set position of walls 
 let walls =[
+    //pivotal end piece
+    {x_postion:1270,y_position:530, width:10, height:100},
      //box surrounding player in center    
      {x_postion:620, y_position:290, width:10, height:100},
      {x_postion:800, y_position:290, width:10, height:100},
@@ -98,8 +111,7 @@ let walls =[
      {x_postion:170, y_position:90, width:1100, height:10},
      {x_postion:170, y_position:90, width:10, height:540},
      {x_postion:1270,y_position:90, width:10, height:440},
-     //pivotal end piece
-     {x_postion:1270,y_position:530, width:10, height:100},
+     
      //top right 
      {x_postion:900, y_position:100, width:10, height:300},
      {x_postion:900, y_position:400, width:300, height:10},
@@ -343,38 +355,59 @@ enemyGroup[1].walkRight(2800)
     let keys = [
         {width:50, height:50, x_postion:1028, y_position:228, display:'block'},
         {width:50, height:50, x_postion:364, y_position:236, display:'block'},
-        {width:50, height:50, x_postion:710, y_position:232, display:'block'}
+        {width:50, height:50, x_postion:200, y_position:557, display:'block'}
     ]
-function drawKeys(){
-    keys.forEach( item =>{
-        let key = document.createElement('img')
-          key.src = "assets/imgs/pngfind.com-zelda-icon-png-6837925.png"
-          key.style.position = 'fixed'
-          key.style.display = `${item.display}`
-          key.style.height = `${item.height}px`
-          key.style.width =  `${item.width}px`
-          key.style.left =  `${item.x_postion}px`
-          key.style.top = `${item.y_position}px`
-          document.body.appendChild(key)
-      })
+
+    let keyRef = []
+    for(let i = 0; i<keys.length; i++){
+    let key = document.createElement('img')
+    key.src = "assets/imgs/pngfind.com-zelda-icon-png-6837925.png"
+    key.style.position = 'fixed'
+    key.style.display =`${keys[i].display}`
+    key.style.height = `${keys[i].height}px`
+    key.style.width =  `${keys[i].width}px`
+    key.style.left =   `${keys[i].x_postion}px`
+    key.style.top =    `${keys[i].y_position}px`
+    document.body.appendChild(key)
+    keyRef.push(key)
     }
-    document.addEventListener('DOMContentLoaded',drawKeys)
+    console.log(keyRef[0])
 
-    console.log(drawKeys)
-
-      function checkKeys(){
+    
+    
+    function checkKeys(){
         let result 
         for (let i = 0; i<keys.length; i++){
             if (!collisionDetect(ghost, keys[i])){
-                console.log(keys[i].x_postion)
                 result = false;
-                 keys[i].display = 'none' 
-                 console.log(keys[i].display)
-                 drawKeys()
+                 keyRef[i].style.width = '0px'
+                 keys[i].x_postion = 0
+                //  keyRef[i] 
+                 keyCount++
+                 updateKeyCount()
             }else{
                  result = true;
             }
         }
         console.log(result)
-        return result
     }
+
+    let exitSign = {
+        width:100, height: 50, x_postion : 66666, y_position :318,
+    }
+
+    let exit = document.createElement('img');
+    exit.src = "assets/imgs/exit.png"
+    exit.style.position = 'fixed'
+    exit.style.height = `${exitSign.height}px`
+    exit.style.width =  `${exitSign.width}px`
+    exit.style.left =   `${exitSign.x_postion}px`
+    exit.style.top =    `${exitSign.y_position}px`
+    document.body.appendChild(exit)
+
+    function checkExit(){
+        if(!collisionDetect(ghost,exitSign)){
+            console.log('you win the Game')
+        }
+    }
+    
