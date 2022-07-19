@@ -23,7 +23,7 @@ function setPositon(item,num1,num2){
 }
 let ghost = {
     x_postion : 696,
-    y_position :318,
+    y_position :218,
     width: 50,
     height : 50, 
 }
@@ -32,6 +32,11 @@ ghostRef.style.left = ghost.x_postion + 'px'
 ghostRef.style.top = ghost.y_position + 'px'
 ghostRef.style.width = ghost.width + 'px'
 ghostRef.style.height = ghost.height + 'px'
+
+function ghostHurt(){
+    ghostRef.style.transform = 'rotate(360deg)'
+    ghostRef.style.filter = 'grayscale(100%)'
+}
 
 document.addEventListener('keydown',function(e){
     if(e.key === 'ArrowLeft'){
@@ -161,6 +166,7 @@ function checkMove(){
              break;
         }else{
              result = true;
+             
         }
     }
     // console.log(result)
@@ -169,57 +175,7 @@ function checkMove(){
 
 //set enemy paramiters
 
-
-
-// let enemys = [
-//     {width:50 , height:50, x_postion:1200, y_position:130},
-//     {width:50 , height:50, x_postion:800, y_position:430},
-//     {width:50 , height:50, x_postion:565, y_position:220},
-// ]
-
-//      let enemysAll = document.querySelectorAll('.enemys') 
-//      let myEnemys = []
-//      for (let i = 0; i < enemysAll.length; i++){
-//         myEnemys.push(enemysAll[i])
-//      }
-     
-//      myEnemys[0].style.left = enemys[0].x_postion +'px'
-//      myEnemys[0].style.top = enemys[0].y_position +'px'
-
-
-
-// function  moveenemyOne(){
-//    while(win == false){
-
-//     enemys[0].x_postion += 1
-//    myEnemys[0].style.left= enemys[0].x_postion +'px'
-//     console.log(enemys[0].x_postion)
-   
-// }
-  
-// }
-// button.addEventListener('click',moveenemyOne)
-
-//      function checkEnemys(){
-//         let result 
-//         for (let i = 0; i<walls.length; i++){
-//             if (!collisionDetect(enemys[i], walls[i])){
-//                  result = false;
-//                  break;
-//             }else{
-//                  result = true;
-//             }
-//         }
-//         // console.log(result)
-//         return result
-//     }
-
-
-
-
-
-
-
+enemyPos=[]
 //create enemy in the dom
 function defineEnemy(){
     let enemy = document.createElement('img');
@@ -228,6 +184,7 @@ function defineEnemy(){
     enemy.style.height = '50px'
     enemy.style.width =  '50px'
     document.body.appendChild(enemy)
+    enemyPos.push(enemy)
     return enemy
 }
 
@@ -235,36 +192,41 @@ function defineEnemy(){
 function newEnemy(x_postion,y_position){
     let sprite = defineEnemy()
     let direction = null;
+//sweet sweet glorious success
+    function checkEnemyCollision(){ 
+        if(
+        ghost.x_postion + 7 > x_postion + 50 ||
+        ghost.x_postion + ghost.width - 5 < x_postion ||
+        ghost.y_position + 6 > y_position + 50 ||
+        ghost.y_position + ghost.height - 5 < y_position){
+            
+            return false
+        }
+        console.log('touchin a ghosty')
+        ghostHurt()
+        return true
+    }
 
     function moveEnemy(){
         if (direction === 'left'){
-            x_postion -= 1
+            x_postion -= 1.
             sprite.style.transform = 'scaleX(-1)'
-            if(checkEnemyHit()){
-                console.log('we are hit capitan')
-            }
         }
         if( direction === 'right'){
             x_postion += 1
             sprite.style.transform = 'scaleX(1)'
-            if(checkEnemyHit()){
-                console.log('we are hit capitan')
-            }
+            // console.log(enemyPos[1].style.left)
+            checkEnemyCollision()
         }
         if(direction ==='up'){
             y_position -= 1
-            if(checkEnemyHit()){
-                console.log('we are hit capitan')
-            }
         }
         if(direction === 'down'){
             y_position += 1
-            if(checkEnemyHit()){
-                console.log('we are hit capitan')
-            }
         }
         sprite.style.left = x_postion +'px'
         sprite.style.top = y_position +'px'
+    
     }
     setInterval(moveEnemy,10)
    
@@ -329,26 +291,10 @@ enemyGroup[1].walkRight(2800)
              .then(()=>enemyGroup[1].walkUp(1300))
              .then(()=> enemyGroup[1].walkLeft(2800))
              .then(()=>enemyGroup[1].walkDown(1300))
+             .then(()=>enemyGroup[1].stop)
 }
-// while(win == false){
-//     enemyOneMovment()
-// }
-
- // function to check if enemy is colliding with ghost     
-    //   function checkEnemyHit(){
-    //     let result 
-    //     for (let i = 0; i<enemyGroup.length; i++){
-    //         if (!collisionDetect(ghost, enemyGroup[i])){
-    //              result = false;
-    //              break;
-    //         }else{
-    //              result = true;
-    //         }
-    //     }
-    //     console.log(result)
-    //     return result
-    // }
-
+console.log(enemyPos[1])
+enemyOneMovment()
 
 
     //create keys to gather to win game
@@ -357,7 +303,7 @@ enemyGroup[1].walkRight(2800)
         {width:50, height:50, x_postion:364, y_position:236, display:'block'},
         {width:50, height:50, x_postion:200, y_position:557, display:'block'}
     ]
-
+// creates all keys and adds them to an array whos x and y position we can access
     let keyRef = []
     for(let i = 0; i<keys.length; i++){
     let key = document.createElement('img')
@@ -371,10 +317,10 @@ enemyGroup[1].walkRight(2800)
     document.body.appendChild(key)
     keyRef.push(key)
     }
-    console.log(keyRef[0])
+    
 
     
-    
+    //checks if the ghost is touching the keys, if so remove key from the board and add to key count
     function checkKeys(){
         let result 
         for (let i = 0; i<keys.length; i++){
@@ -391,7 +337,7 @@ enemyGroup[1].walkRight(2800)
         }
         console.log(result)
     }
-
+//declare and create exit to win the game
     let exitSign = {
         width:100, height: 50, x_postion : 66666, y_position :318,
     }
@@ -405,6 +351,7 @@ enemyGroup[1].walkRight(2800)
     exit.style.top =    `${exitSign.y_position}px`
     document.body.appendChild(exit)
 
+//if the ghost reaches the exit you win.
     function checkExit(){
         if(!collisionDetect(ghost,exitSign)){
             console.log('you win the Game')

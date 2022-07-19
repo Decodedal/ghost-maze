@@ -15,7 +15,7 @@ body{
    position: absolute;
    /* left : 
    bottom:  */
-   transition: all 5ms; 
+   transition: transform 300ms; 
 }
 
 .wall{
