@@ -23,7 +23,7 @@ function setPositon(item,num1,num2){
 }
 let ghost = {
     x_postion : 696,
-    y_position :218,
+    y_position :318,
     width: 50,
     height : 50, 
 }
@@ -216,7 +216,7 @@ function newEnemy(x_postion,y_position){
             x_postion += 1
             sprite.style.transform = 'scaleX(1)'
             // console.log(enemyPos[1].style.left)
-            checkEnemyCollision()
+            
         }
         if(direction ==='up'){
             y_position -= 1
@@ -226,8 +226,10 @@ function newEnemy(x_postion,y_position){
         }
         sprite.style.left = x_postion +'px'
         sprite.style.top = y_position +'px'
+        checkEnemyCollision()
     
     }
+    
     setInterval(moveEnemy,10)
    
     function walkUp(time){
@@ -280,7 +282,7 @@ function newEnemy(x_postion,y_position){
 }
 //array of new enemys
 let enemyGroup =[ 
-    newEnemy(1208, 150),
+    newEnemy(1218, 150),
     newEnemy(560 , 233)
 ]
 //defining enemy trajectorys
@@ -293,9 +295,21 @@ enemyGroup[1].walkRight(2800)
              .then(()=>enemyGroup[1].walkDown(1300))
              .then(()=>enemyGroup[1].stop)
 }
-console.log(enemyPos[1])
-enemyOneMovment()
+function enemyZeroMovment(){
+    enemyGroup[0].walkLeft(3010)
+                 .then(()=>enemyGroup[0].walkUp(470))
+                 .then(()=>enemyGroup[0].walkRight(3010))
+                 .then(()=>enemyGroup[0].walkDown(470))
+}
 
+
+enemyZeroMovment()
+ enemyOneMovment()
+if(win == false ){
+  // setInterval(enemyOneMovment,4201) 
+   setInterval(enemyOneMovment,9000)
+   setInterval(enemyZeroMovment,7000) 
+}
 
     //create keys to gather to win game
     let keys = [
