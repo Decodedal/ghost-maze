@@ -4,10 +4,13 @@ let start = document.querySelector('#button');
 let keyCountRef = document.querySelector("#keys-count")
 let win = false;
 let keyCount = 0;
+let dracula = "assets/imgs/dracula.png"
+let inspector = "assets/imgs/inspector.png"
+let gameOver = false
 
 function updateKeyCount(){
     keyCountRef.textContent = keyCount
-    if(keyCount === 3){
+    if(keyCount === 4){
        exitSign.x_postion = 666;
        exit.style.left = `${exitSign.x_postion}px`;
     }
@@ -34,8 +37,8 @@ ghostRef.style.width = ghost.width + 'px'
 ghostRef.style.height = ghost.height + 'px'
 
 function ghostHurt(){
-    ghostRef.style.transform = 'rotate(360deg)'
-    ghostRef.style.filter = 'grayscale(100%)'
+    ghostRef.style.opacity = '0'
+    gameOver = true
 }
 
 document.addEventListener('keydown',function(e){
@@ -92,12 +95,6 @@ console.log(a,b)
 return a,b 
 })
 
-// document.addEventListener("mouseup",(event)=>{
-//     let c = event.clientX;
-//     let d = event.clientY;
-//     console.log(c,d)
-//     return(c,d)
-// })
 
 
 //set position of walls 
@@ -177,20 +174,21 @@ function checkMove(){
 
 enemyPos=[]
 //create enemy in the dom
-function defineEnemy(){
+function defineEnemy(img){
     let enemy = document.createElement('img');
-    enemy.src = "assets/imgs/kisspng-mega-man-11-video-games-pixel-art-sprite-mega-man-megaman-x-8-bit-www-imgkid-com-the-image-kid-h-5cd6b5d4a2f441.4503273315575751246675.png" 
+    enemy.src = img
     enemy.style.position = 'fixed'
     enemy.style.height = '50px'
     enemy.style.width =  '50px'
+    // enemy.style.zIndex = '8'
     document.body.appendChild(enemy)
     enemyPos.push(enemy)
     return enemy
 }
 
 //logic to set enemy movement path 
-function newEnemy(x_postion,y_position){
-    let sprite = defineEnemy()
+function newEnemy(character,x_postion,y_position){
+    let sprite = character
     let direction = null;
 //sweet sweet glorious success
     function checkEnemyCollision(){ 
@@ -281,9 +279,17 @@ function newEnemy(x_postion,y_position){
     }
 }
 //array of new enemys
+let draculaOne = defineEnemy(dracula)
+let inspectorOne = defineEnemy(inspector)
+let inspectorTwo = defineEnemy(inspector)
+let draculaTwo = defineEnemy(dracula)
+
+
 let enemyGroup =[ 
-    newEnemy(1218, 150),
-    newEnemy(560 , 233)
+    newEnemy(inspectorOne, 1218, 150),
+    newEnemy(inspectorTwo, 560 , 233),
+    newEnemy(draculaOne, 231,112),
+    newEnemy(draculaTwo,280, 538)
 ]
 //defining enemy trajectorys
 // enemyGroup[0].walkLeft(2500)
@@ -301,21 +307,42 @@ function enemyZeroMovment(){
                  .then(()=>enemyGroup[0].walkRight(3010))
                  .then(()=>enemyGroup[0].walkDown(470))
 }
+function enemyTwoMovment(){
+    enemyGroup[2].walkDown(4000)
+                 .then(()=>enemyGroup[2].walkUp(4000))
+}
 
+function enemyThreeMovment(){
+    enemyGroup[3].walkRight(8850)
+                 .then(()=>enemyGroup[3].walkLeft(8850))
 
+}
+
+enemyThreeMovment()
+enemyTwoMovment()
 enemyZeroMovment()
- enemyOneMovment()
-if(win == false ){
+enemyOneMovment()
+
+if(gameOver == false ){
   // setInterval(enemyOneMovment,4201) 
    setInterval(enemyOneMovment,9000)
    setInterval(enemyZeroMovment,7000) 
+   setInterval(enemyTwoMovment,8300)
+   setInterval(enemyThreeMovment,18000)
+}else if(gameOver = true){
+  clearInterval(enemyZeroMovment)
+  clearInterval(enemyOneMovment)
+  clearInterval(enemyTwoMovment)
+  clearInterval(enemyThreeMovment)
 }
+
 
     //create keys to gather to win game
     let keys = [
         {width:50, height:50, x_postion:1028, y_position:228, display:'block'},
         {width:50, height:50, x_postion:364, y_position:236, display:'block'},
-        {width:50, height:50, x_postion:200, y_position:557, display:'block'}
+        {width:50, height:50, x_postion:200, y_position:557, display:'block'},
+        {width:50, height:50, x_postion:1200, y_position:557, display:'block'}
     ]
 // creates all keys and adds them to an array whos x and y position we can access
     let keyRef = []
