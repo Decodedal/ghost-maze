@@ -16,7 +16,7 @@ let winGhostRef = document.querySelector("#winGhost")
 
 function updateKeyCount(){
     keyCountRef.textContent = keyCount
-    if(keyCount === 1){
+    if(keyCount === 4){
        exitSign.x_postion = 666;
        exit.style.left = `${exitSign.x_postion}px`;
     }
@@ -24,15 +24,9 @@ function updateKeyCount(){
 
 updateKeyCount()
 
-
+//refreshes page to restart the game
 playAgain.addEventListener('click',()=> location.reload())
 
-function setPositon(item,num1,num2){
-    let one =  item.style.left = num1 + 'px'
-    let two= item.style.bottom = num2 +'px'
-    console.log(one,two)
-    return one, two
-}
 let ghost = {
     x_postion : 696,
     y_position :318,
@@ -52,7 +46,7 @@ function ghostHurt(){
     gameoverRef.style.opacity = '1'
     playAgain.style.opacity = '1'
 }
-
+//function handles ghost movement 
 document.addEventListener('keydown',function(e){
     if(e.key === 'ArrowLeft'){
         ghost.x_postion -= 6
@@ -99,7 +93,7 @@ document.addEventListener('keydown',function(e){
 })
 
 
-//find cordinates of mouse click thought would be helpful with layout
+//find cordinates of mouse click helpful with layout
 document.addEventListener('mousedown', (event)=>{
 let a = event.clientX;
 let b = event.clientY;
@@ -150,7 +144,6 @@ let walls =[
 
 walls.forEach( item =>{
   let wall = document.createElement('div')
-    // wall.style.border = '1px dotted white'
     wall.style.position = 'fixed'
     wall.style.backgroundColor = 'green'
     wall.style.height = `${item.height}px`
@@ -189,7 +182,6 @@ function checkMove(){
 
 //set enemy paramiters
 
-enemyPos=[]
 //create enemy in the dom
 function defineEnemy(img){
     let enemy = document.createElement('img');
@@ -197,9 +189,7 @@ function defineEnemy(img){
     enemy.style.position = 'fixed'
     enemy.style.height = '50px'
     enemy.style.width =  '50px'
-    // enemy.style.zIndex = '8'
     document.body.appendChild(enemy)
-    enemyPos.push(enemy)
     return enemy
 }
 
@@ -207,7 +197,7 @@ function defineEnemy(img){
 function newEnemy(character,x_postion,y_position){
     let sprite = character
     let direction = null;
-//sweet sweet glorious success
+//key function checks if enemy is touching the ghost
     function checkEnemyCollision(){ 
         if(
         ghost.x_postion + 7 > x_postion + 50 ||
@@ -230,8 +220,6 @@ function newEnemy(character,x_postion,y_position){
         if( direction === 'right'){
             x_postion += 1
             sprite.style.transform = 'scaleX(1)'
-            // console.log(enemyPos[1].style.left)
-            
         }
         if(direction ==='up'){
             y_position -= 1
@@ -287,7 +275,6 @@ function newEnemy(character,x_postion,y_position){
         direction = null
     }
     return {
-        sprite :sprite,
         walkUp :walkUp,
         walkDown: walkDown,
         walkLeft :walkLeft,
@@ -309,8 +296,7 @@ let enemyGroup =[
     newEnemy(draculaTwo,280, 538)
 ]
 //defining enemy trajectorys
-// enemyGroup[0].walkLeft(2500)
-//       .then(()=> enemyGroup[0].walkDown(1000))
+
 function enemyOneMovment(){
 enemyGroup[1].walkRight(2800)
              .then(()=>enemyGroup[1].walkUp(1300))

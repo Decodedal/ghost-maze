@@ -15,7 +15,7 @@ body{
    position: absolute;
    /* left : 
    bottom:  */
-   transition: transform 300ms, opacity 4s,; 
+   transition: transform 600ms, opacity 4s,; 
   
 }
 
