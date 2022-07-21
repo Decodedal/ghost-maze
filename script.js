@@ -7,16 +7,25 @@ let keyCount = 0;
 let dracula = "assets/imgs/dracula.png"
 let inspector = "assets/imgs/inspector.png"
 let gameOver = false
+let startButton = document.querySelector('#start')
+let gameoverRef = document.querySelector("#gameOver")
+let playAgain = document.querySelector('#playAgain')
+let winScreen = document.querySelector("#winScreen")
+let congrat = document.querySelector("#youWin")
+let winGhostRef = document.querySelector("#winGhost")
 
 function updateKeyCount(){
     keyCountRef.textContent = keyCount
-    if(keyCount === 4){
+    if(keyCount === 1){
        exitSign.x_postion = 666;
        exit.style.left = `${exitSign.x_postion}px`;
     }
 }
 
 updateKeyCount()
+
+
+playAgain.addEventListener('click',()=> location.reload())
 
 function setPositon(item,num1,num2){
     let one =  item.style.left = num1 + 'px'
@@ -36,9 +45,12 @@ ghostRef.style.top = ghost.y_position + 'px'
 ghostRef.style.width = ghost.width + 'px'
 ghostRef.style.height = ghost.height + 'px'
 
+//determines what happens when the ghost runs into an enemy
 function ghostHurt(){
     ghostRef.style.opacity = '0'
     gameOver = true
+    gameoverRef.style.opacity = '1'
+    playAgain.style.opacity = '1'
 }
 
 document.addEventListener('keydown',function(e){
@@ -99,14 +111,16 @@ return a,b
 
 //set position of walls 
 let walls =[
-    //pivotal end piece
+    //first two change to start the game
+    {x_postion:620, y_position:390, width:60, height:10},
+    {x_postion:620, y_position:290, width:60, height:10},
     {x_postion:1270,y_position:530, width:10, height:100},
      //box surrounding player in center    
      {x_postion:620, y_position:290, width:10, height:100},
      {x_postion:800, y_position:290, width:10, height:100},
-     {x_postion:620, y_position:290, width:60, height:10},
+     
      {x_postion:750, y_position:290, width:60, height:10},
-     {x_postion:620, y_position:390, width:60, height:10},
+     
      {x_postion:750, y_position:390, width:60, height:10},
      //border of game 
      {x_postion:170, y_position:620, width:1100, height:10},
@@ -128,14 +142,15 @@ let walls =[
      {x_postion:530, y_position:200, width:10, height:300},
      {x_postion:330, y_position:200, width:10, height:300},
      {x_postion:330, y_position:200, width:100, height:10},
-
+]
      
     
-]
+
 //loop through and create my walls
+
 walls.forEach( item =>{
   let wall = document.createElement('div')
-    wall.style.border = '1px dotted white'
+    // wall.style.border = '1px dotted white'
     wall.style.position = 'fixed'
     wall.style.backgroundColor = 'green'
     wall.style.height = `${item.height}px`
@@ -144,6 +159,8 @@ walls.forEach( item =>{
     wall.style.top = `${item.y_position}px`
     document.body.appendChild(wall)
 })
+
+
 //logic for collision 
 function collisionDetect(a,b){
     return(
@@ -317,24 +334,17 @@ function enemyThreeMovment(){
                  .then(()=>enemyGroup[3].walkLeft(8850))
 
 }
-
+//declare initial enemy movement 
 enemyThreeMovment()
 enemyTwoMovment()
 enemyZeroMovment()
 enemyOneMovment()
-
-if(gameOver == false ){
-  // setInterval(enemyOneMovment,4201) 
+    
+  // keep the enemys moving 
    setInterval(enemyOneMovment,9000)
    setInterval(enemyZeroMovment,7000) 
    setInterval(enemyTwoMovment,8300)
    setInterval(enemyThreeMovment,18000)
-}else if(gameOver = true){
-  clearInterval(enemyZeroMovment)
-  clearInterval(enemyOneMovment)
-  clearInterval(enemyTwoMovment)
-  clearInterval(enemyThreeMovment)
-}
 
 
     //create keys to gather to win game
@@ -395,7 +405,17 @@ if(gameOver == false ){
 //if the ghost reaches the exit you win.
     function checkExit(){
         if(!collisionDetect(ghost,exitSign)){
-            console.log('you win the Game')
+            win = true;
+            winScreen.style.opacity = '1';
+            congrat.style.opacity = '1';
+            ghostRef.style.opacity = '0';
+            ghostRef.style.left = '0px'
+            ghost.x_postion = 0
+            playAgain.style.backgroundColor = 'green';
+            playAgain.style.opacity = '1';
+            winGhostRef.style.opacity = '1';
         }
     }
     
+//create walls for the start of the game 
+
