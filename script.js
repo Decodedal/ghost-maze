@@ -13,6 +13,16 @@ let playAgain = document.querySelector('#playAgain')
 let winScreen = document.querySelector("#winScreen")
 let congrat = document.querySelector("#youWin")
 let winGhostRef = document.querySelector("#winGhost")
+let info = document.querySelector('#info')
+let instructions = document.querySelector('#howplay')
+
+info.addEventListener('mouseover',()=>{
+    instructions.style.zIndex = '3'
+})
+
+info.addEventListener('mouseout',()=>{
+    instructions.style.zIndex ='-3'
+})
 
 function updateKeyCount(){
     keyCountRef.textContent = keyCount

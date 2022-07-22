@@ -92,7 +92,7 @@ p{
     z-index: 2;
     font-size: 100px;
     top: 500px;
-    left: 80px;
+    right: 200px;
     font-family:Jazz LET, fantasy;
     opacity: 0;
     transition: opacity 4s;
@@ -112,5 +112,75 @@ p{
     width: 100vw;
     height: 100vh;
     filter: grayscale(100%);
+    z-index: -1;
+    /* display: none; */
 }
 
+#info{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: gray;
+    border-radius: 100%;
+    box-shadow: 2px 2px 2px black;
+    z-index: 1;
+    top: 10px;
+    left: 0px;
+   }
+
+   #line{
+    height: 30px;
+    width: 5px;
+    background-color: white;
+    position: absolute;
+    top: 36%;
+    left: 45%;
+}
+#dot{
+    height: 5px;
+    width: 5px;
+    position: relative;
+    border-radius: 100%;
+    background-color: white;
+    top:15%;
+    left: 45%;
+
+}
+#howplay{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    position: absolute;
+    background-color: rgb(137, 0, 32);
+    border: 2px solid black;
+    height: 300px;
+    width: 300px;
+    top: 60px;
+    z-index: -5;
+}
+#howplay ul{
+    font-size: 19px;
+    color: rgb(255, 255, 255);
+    
+}
+/* .info:hover .howplay{
+    display: block;
+    
+} */
+#info:hover{
+    transform: scale(1.3);
+}
+
+h3{
+    text-decoration: underline;
+}
+
+
+#title{
+  width: 500px;
+  height: 90px;
+  left: 290px;
+  position: relative;
+}
