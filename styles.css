@@ -184,3 +184,9 @@ h3{
   left: 290px;
   position: relative;
 }
+
+#theme{
+    position: absolute;
+    z-index: 2;
+    top:700px;
+}
