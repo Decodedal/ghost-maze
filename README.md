@@ -16,7 +16,7 @@ If the player reaches the end of the maze before the time is up the remaining ti
 ### MVP Criteria
 
 - character is controlable and can not pass beyond the boundery of a wall.
-- The game has a functioning timer which determines user success or failure. 
+- The game has collectable items which the user must get to unlock the maze while avoiding enemys. 
 
 ### Post-MVP Plans
 
