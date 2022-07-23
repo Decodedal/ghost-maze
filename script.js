@@ -15,6 +15,7 @@ let congrat = document.querySelector("#youWin")
 let winGhostRef = document.querySelector("#winGhost")
 let info = document.querySelector('#info')
 let instructions = document.querySelector('#howplay')
+let music = document.querySelector('#theme')
 
 info.addEventListener('mouseover',()=>{
     instructions.style.zIndex = '3'
@@ -55,6 +56,9 @@ function ghostHurt(){
     gameOver = true
     gameoverRef.style.opacity = '1'
     playAgain.style.opacity = '1'
+    music.src = 'assets/audio/dead.mp3'
+    ghostRef.style.left = '0px'
+    ghost.x_postion = 0
 }
 //function handles ghost movement 
 document.addEventListener('keydown',function(e){
@@ -216,11 +220,25 @@ function newEnemy(character,x_postion,y_position){
         ghost.y_position + ghost.height - 5 < y_position){
             
             return false
-        }
+        }else{
         console.log('touchin a ghosty')
         ghostHurt()
         return true
+        }
     }
+    //if enemys go off their track the game will restart   
+    function fixEnemyBug(){
+        for(let i = 0; i<walls.length; i++){
+            if( x_postion > walls[i].x_postion + walls[i].width ||
+                x_postion + 20 < walls[i].x_postion ||
+                y_position > walls[i].y_position + walls[i].height ||
+                y_position + 20 < walls[i].y_position){
+                    // console.log('not hittin')
+                }else{
+                    location.reload()
+                }
+            }    
+        }
 
     function moveEnemy(){
         if (direction === 'left'){
@@ -240,6 +258,7 @@ function newEnemy(character,x_postion,y_position){
         sprite.style.left = x_postion +'px'
         sprite.style.top = y_position +'px'
         checkEnemyCollision()
+        fixEnemyBug()
     
     }
     
@@ -373,7 +392,7 @@ enemyOneMovment()
         for (let i = 0; i<keys.length; i++){
             if (!collisionDetect(ghost, keys[i])){
                 result = false;
-                 keyRef[i].style.width = '0px'
+                keyRef[i].style.width = '0px'
                  keys[i].x_postion = 0
                 //  keyRef[i] 
                  keyCount++
@@ -410,6 +429,7 @@ enemyOneMovment()
             playAgain.style.backgroundColor = 'green';
             playAgain.style.opacity = '1';
             winGhostRef.style.opacity = '1';
+            music.src = 'assets/audio/ending.mp3'
         }
     }
     

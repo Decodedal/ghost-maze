@@ -188,5 +188,6 @@ h3{
 #theme{
     position: absolute;
     z-index: 2;
-    top:700px;
+    top:650px;
+    /* background-color: black; */
 }
