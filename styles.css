@@ -56,7 +56,7 @@ p{
     left: 266px;
     top:  40px;
     z-index: 10;
-    font-family: 'Horror Type';
+    font-family: 'Horror Type', sans-serif;
     font-size: 500px;
     opacity: 0;
     transition: opacity, 2s;
