@@ -56,7 +56,7 @@ function ghostHurt(){
     gameOver = true
     gameoverRef.style.opacity = '1'
     playAgain.style.opacity = '1'
-    music.src = 'assets/audio/dead.mp3'
+    music.src = '../assets/audio/dead.mp3'
     ghostRef.style.left = '0px'
     ghost.x_postion = 0
 }
@@ -429,7 +429,7 @@ enemyOneMovment()
             playAgain.style.backgroundColor = 'green';
             playAgain.style.opacity = '1';
             winGhostRef.style.opacity = '1';
-            music.src = 'assets/audio/ending.mp3'
+            music.src = '../assets/audio/ending.mp3'
         }
     }
     
